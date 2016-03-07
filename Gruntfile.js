@@ -53,45 +53,11 @@ module.exports = exports = function(grunt) {
             package_bundling_test: {
                 src: 'test/runner.browserify.js',
                 dest: 'test/localforage.browserify.js'
-            },
-            main: {
-                files: {
-                    'dist/localforage.js': 'src/localforage.js'
-                },
-                options: {
-                    browserifyOptions: {
-                        standalone: 'localforage'
-                    },
-                    transform: ['rollupify', 'babelify'],
-                    plugin: ['bundle-collapser/plugin']
-                }
-            },
-            no_promises: {
-                files: {
-                    'dist/localforage.nopromises.js': 'src/localforage.js'
-                },
-                options: {
-                    browserifyOptions: {
-                        standalone: 'localforage'
-                    },
-                    transform: ['rollupify', 'babelify'],
-                    plugin: ['bundle-collapser/plugin'],
-                    exclude: ['lie']
-                }
             }
         },
         run: {
-            derequire: {
-                cmd: './bin/derequire.js',
-                args: [
-                    'dist/localforage.js'
-                ]
-            },
-            derequire_no_promises: {
-                cmd: './bin/derequire.js',
-                args: [
-                    'dist/localforage.nopromises.js'
-                ]
+            rollup: {
+                cmd: './bin/rollup.js'
             }
         },
         concat: {
@@ -255,8 +221,7 @@ module.exports = exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('default', ['build', 'connect', 'watch']);
-    grunt.registerTask('build', ['browserify:main', 'browserify:no_promises',
-        'run:derequire', 'run:derequire_no_promises',
+    grunt.registerTask('build', ['run:rollup',
         'concat', 'es3_safe_recast', 'uglify']);
     grunt.registerTask('publish', ['build', 'shell:publish-site']);
     grunt.registerTask('serve', ['build', 'connect:test', 'watch']);
