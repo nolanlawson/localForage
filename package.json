@@ -43,12 +43,17 @@
     "grunt-saucelabs": "^5.1.2",
     "grunt-shell": "^0.6.4",
     "grunt-webpack": "^1.0.11",
+    "inline-process-browser": "^2.0.0",
     "load-grunt-tasks": "^0.4.0",
     "mocha": "^1.18.2",
     "phantomjs": "^1.9.7-12",
-    "rollupify": "^0.1.0",
+    "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-browserify-transform": "^0.1.0",
+    "rollup-plugin-commonjs": "^2.2.1",
+    "rollup-plugin-node-resolve": "^1.5.0",
     "script-loader": "^0.6.1",
     "uglify-js": "^2.3.x",
+    "unreachable-branch-transform": "^0.5.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.10.1"
   },
@@ -57,6 +62,6 @@
     "url": "http://github.com/mozilla/localForage/issues"
   },
   "dependencies": {
-    "lie": "3.0.2"
+    "lie-pretransform": "^1.0.3"
   }
 }

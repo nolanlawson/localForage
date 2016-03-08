@@ -8,6 +8,9 @@ var rollup = require('rollup');
 var rollupBabel = require('rollup-plugin-babel');
 var rollupResolve = require('rollup-plugin-node-resolve');
 var rollupCJS = require('rollup-plugin-commonjs');
+var rollupTransform = require('rollup-plugin-browserify-transform');
+var inlineProcessBrowser = require('inline-process-browser');
+var unreachableBranchTransform = require('unreachable-branch-transform');
 var fs = require('fs');
 var Promise = require('lie');
 
@@ -18,14 +21,17 @@ function doRollup(noPromises) {
             rollupResolve({
                 jsnext: true,
                 main: true,
-                skip: noPromises ? ['lie'] : []
+                browser: true,
+                skip: noPromises ? ['lie-pretransform'] : []
             }),
             rollupCJS({
                 include: './node_modules/**'
             }),
             rollupBabel({
                 exclude: './node_modules/**'
-            })
+            }),
+            rollupTransform(inlineProcessBrowser),
+            rollupTransform(unreachableBranchTransform)
         ]
     }).then(function (bundle) {
         var code = bundle.generate({
