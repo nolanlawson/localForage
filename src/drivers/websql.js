@@ -10,7 +10,9 @@
 var webSQLStorage = (function(globalObject) {
     'use strict';
 
-    var openDatabase = globalObject.openDatabase;
+    var openDatabase = typeof sqlitePlugin !== 'undefined' ?
+      sqlitePlugin.openDatabase.bind(sqlitePlugin) :
+      globalObject.openDatabase;
 
     // If WebSQL methods aren't available, we can stop now.
     if (!openDatabase) {

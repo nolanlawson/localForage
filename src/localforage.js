@@ -84,7 +84,7 @@ var localForage = (function(globalObject) {
 
         result[DriverType.WEBSQL] = !!(function() {
             try {
-                return self.openDatabase;
+                return typeof sqlitePlugin !== 'undefined' || self.openDatabase;
             } catch (e) {
                 return false;
             }
@@ -151,7 +151,7 @@ var localForage = (function(globalObject) {
         if (typeof callback === 'function') {
             promise.then(callback);
         }
-        
+
         if (typeof errorCallback === 'function') {
             promise.catch(errorCallback);
         }
